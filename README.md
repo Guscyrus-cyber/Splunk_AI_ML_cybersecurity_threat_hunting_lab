@@ -94,12 +94,12 @@ Using the query:
 
 index=network sourcetype=clustering_hunt
 
-| stats count by behavior_group\
+| stats count by behavior_group
 
 Please refer to image # 5 in the repository.
 
-This dataset consists of four distinct behavior groups representing different types of network activity. These behavior groups will be analyzed throughout this lab to identify patterns, detect outliers, and investigate suspicious activity using clustering concepts and AI/ML threat hunting techniques.**\
-\**
+This dataset consists of four distinct behavior groups representing different types of network activity. These behavior groups will be analyzed throughout this lab to identify patterns, detect outliers, and investigate suspicious activity using clustering concepts and AI/ML threat hunting techniques.
+
 
 | **Behavior Group**            | **Events** |
 |-------------------------------|------------|
@@ -117,7 +117,7 @@ index=network sourcetype=clustering_hunt\
 
 AI/ML Concept:
 
-Cluster Discovery\
+Cluster Discovery
 
 Please refer to image # 6 in the repository.
 
@@ -125,7 +125,7 @@ Please refer to image # 6 in the repository.
 .normal_web_activity\
 . recon_scanning_activity\
 . suspicious_beaconing_activity\
-. admin_management_activity\
+. admin_management_activity
 
 **2. Which source IP addresses generated the most connections?**
 
@@ -135,7 +135,7 @@ index=network sourcetype=clustering_hunt\
 
 AI/ML Concept:
 
-Outlier Identification\
+Outlier Identification
 
 Please refer to images # 7 and 8 in the repository.
 
@@ -157,7 +157,7 @@ index=network sourcetype=clustering_hunt\
 
 AI/ML Concept:
 
-Reconnaissance Detection\
+Reconnaissance Detection
 
 Please refer to images # 9 and 10 in the repository.
 
@@ -178,7 +178,7 @@ index=network sourcetype=clustering_hunt\
 
 AI/ML Concept:
 
-Behavioral Grouping\
+Behavioral Grouping
 
 Please refer to image # 11 in the repository.
 
@@ -230,7 +230,7 @@ index=network sourcetype=clustering_hunt\
 
 AI/ML Concept:
 
-Service Profiling\
+Service Profiling
 
 Please refer to image # 13 in the repository.
 
@@ -265,7 +265,7 @@ index=network sourcetype=clustering_hunt\
 
 AI/ML Concept:
 
-Cluster Comparison\
+Cluster Comparison
 
 Please refer to image # 14 in the repository.
 
@@ -306,7 +306,7 @@ index=network sourcetype=clustering_hunt\
 
 AI/ML Concept:
 
-Pattern Recognition\
+Pattern Recognition
 
 Please refer to image # 15 in the repository.
 
@@ -332,13 +332,12 @@ This query demonstrates how AI/ML models can use **DNS behavior as a feature** w
 
 Rather than relying on DNS activity alone, clustering algorithms evaluate multiple characteristics together, including:
 
-**. DNS query volume\
-. Connection frequency**
-
-**. Data transfer size\
-. Number of unique destinations\
-. Geographic location\
-. Destination ports**
+**. DNS query volume**
+**. Connection frequency**
+**. Data transfer size**
+**. Number of unique destinations**
+**. Geographic location**
+**. Destination ports**
 
 When these features are analyzed collectively, AI/ML models can distinguish **normal web browsing**, **administrative activity**, **reconnaissance**, and **suspicious beaconing** without relying solely on predefined attack signatures. In this dataset, the exceptionally high DNS query volume makes the **suspicious_beaconing_activity** cluster stand out as the highest-priority candidate for further investigation.
 
@@ -350,7 +349,7 @@ index=network sourcetype=clustering_hunt\
 
 AI/ML Concept:
 
-Threat Hunting Prioritization\
+Threat Hunting Prioritization
 
 Please refer to image # 16 in the repository.
 
@@ -374,7 +373,7 @@ index=network sourcetype=clustering_hunt\
 
 AI/ML Concept:
 
-Cluster Outliers\
+Cluster Outliers
 
 Please refer to images # 17 and 18 in the repository.
 
@@ -405,7 +404,7 @@ This combination of high connection counts and extensive host discovery is chara
 **11. Which behavior groups appear most suspicious and should be investigated first?**
 
 index=network sourcetype=clustering_hunt\
-\| stats sum(connection_count) as connections sum(unique_destinations) as destinations sum(bytes_sent) as bytes sum(failed_logins) as failed_logins by behavior_group\
+\| stats sum(connection_count) as connections sum(unique_destinations) as destinations sum(bytes_sent) as bytes sum(failed_logins) as failed_logins by behavior_group
 
 Please refer to image # 19 in the repository.
 
