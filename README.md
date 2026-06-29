@@ -43,15 +43,10 @@ The objectives of this lab are to:
 
 **Dataset**
 
-**File name:** threat_hunting_clustering_dataset.csv\
-\
-\
-\
-\
-\
-\
-\
-\
+**File name:** threat_hunting_clustering_dataset.csv
+
+Please refer to image # 1 in the repository.
+
 **Fields**
 
 timestamp
@@ -78,34 +73,31 @@ country
 
 behavior_group
 
-**Uploading verification\
-\
-\**
+**Uploading verification**
 
-**Verification of indexed dataset into Splunk of 60 events\
-\**
-Using the query:\
+Please refer to image # 2 in the repository.
+
+**Verification of indexed dataset into Splunk of 60 events**
+
+Using the query:
+
+index=network sourcetype=clustering_hunt
+| table timestamp src_ip dest_ip dest_port protocol connection_count unique_destinations bytes_sent dns_queries failed_logins country behavior_group\
 \
+I queried the entire dataset after indexing to verify that all **60 events** were successfully ingested into Splunk Enterprise. The results display the complete set of network events, including timestamps, source and destination IP addresses, ports, protocols, connection counts, unique destinations, data transfer volumes, DNS activity, failed login attempts, geographic locations, and behavior groups. For demonstration purposes, only the first **5 events** are shown in the screenshot, while the complete dataset contains **60 events** used throughout this lab.
+
+Please refer to images # 3 and 4 in the repository.
+
+**Confirmation the dataset distribution**
+
+Using the query:
+
 index=network sourcetype=clustering_hunt
 
-\| table timestamp src_ip dest_ip dest_port protocol connection_count unique_destinations bytes_sent dns_queries failed_logins country behavior_group\
-\
-I queried the entire dataset after indexing to verify that all **60 events** were successfully ingested into Splunk Enterprise. The results display the complete set of network events, including timestamps, source and destination IP addresses, ports, protocols, connection counts, unique destinations, data transfer volumes, DNS activity, failed login attempts, geographic locations, and behavior groups. For demonstration purposes, only the first **5 events** are shown in the screenshot, while the complete dataset contains **60 events** used throughout this lab.\
-\
-**\
-\**
-\
-\
-\**
-\
-Confirmation the dataset distribution\
-\**
-Using the query:**\
-\**
-index=network sourcetype=clustering_hunt
+| stats count by behavior_group\
 
-\| stats count by behavior_group\
-\
+Please refer to image # 5 in the repository.
+
 This dataset consists of four distinct behavior groups representing different types of network activity. These behavior groups will be analyzed throughout this lab to identify patterns, detect outliers, and investigate suspicious activity using clustering concepts and AI/ML threat hunting techniques.**\
 \**
 
@@ -116,10 +108,8 @@ This dataset consists of four distinct behavior groups representing different ty
 | recon_scanning_activity       | 14         |
 | suspicious_beaconing_activity | 14         |
 
-\
-\
-1. Which behavior groups exist in the dataset?
-==============================================
+
+**1. Which behavior groups exist in the dataset?**
 
 index=network sourcetype=clustering_hunt\
 \| stats count by behavior_group\
@@ -128,18 +118,15 @@ index=network sourcetype=clustering_hunt\
 AI/ML Concept:
 
 Cluster Discovery\
-\
-\
-\
+
+Please refer to image # 6 in the repository.
+
 4 behavior groups exist in dataset\
 .normal_web_activity\
 . recon_scanning_activity\
 . suspicious_beaconing_activity\
 . admin_management_activity\
-\
-\
-\
-\
+
 **2. Which source IP addresses generated the most connections?**
 
 index=network sourcetype=clustering_hunt\
@@ -149,14 +136,9 @@ index=network sourcetype=clustering_hunt\
 AI/ML Concept:
 
 Outlier Identification\
-\
-\
-\
-\
-\
-\
-\
-\
+
+Please refer to images # 7 and 8 in the repository.
+
 The source IP addresses generating the highest number of connections included:
 
 | **Source IP** | **Total Connections** |
@@ -176,10 +158,9 @@ index=network sourcetype=clustering_hunt\
 AI/ML Concept:
 
 Reconnaissance Detection\
-\
-\
-\
-\
+
+Please refer to images # 9 and 10 in the repository.
+
 
 | **Source IP** | **Unique Destinations** |
 |---------------|-------------------------|
@@ -198,7 +179,9 @@ index=network sourcetype=clustering_hunt\
 AI/ML Concept:
 
 Behavioral Grouping\
-\
+
+Please refer to image # 11 in the repository.
+
 
 | **Country** | **Total Connections** |
 |-------------|-----------------------|
@@ -235,7 +218,8 @@ index=network sourcetype=clustering_hunt\
 \| stats sum(connection_count) as suspicious_connections by country\
 \| sort - suspicious_connections
 
-\
+Please refer to image # 12 in the repository.
+
 The countries associated with the highest suspicious connection volume were **Unknown**, **China**, and **Russia**.
 
 **6. Which destination ports are most frequently targeted?**
@@ -247,13 +231,9 @@ index=network sourcetype=clustering_hunt\
 AI/ML Concept:
 
 Service Profiling\
-\
-\
-\
-\
-\
-\
-\
+
+Please refer to image # 13 in the repository.
+
 The most frequently targeted destination ports were:
 
 **80 (HTTP)** 14 events\
@@ -286,11 +266,9 @@ index=network sourcetype=clustering_hunt\
 AI/ML Concept:
 
 Cluster Comparison\
-\
-\
-\
-\
-\
+
+Please refer to image # 14 in the repository.
+
 The **suspicious_beaconing_activity** behavior group transferred the largest amount of data, with **61,010,869 bytes**, making it the highest-volume behavior group in the dataset.\
 \
 The results show a significant difference in data transfer volume between the four behavioral clusters.\
@@ -305,7 +283,7 @@ The results show a significant difference in data transfer volume between the fo
 **. recon_scanning_activity** transferred the least amount of data, which aligns with reconnaissance behavior because scanning typically involves many connection attempts but relatively little data exchange. This pattern is consistent with real-world cyberattacks, where reconnaissance generates numerous small requests, while command-and-control or malware communications often involve sustained and larger data transfers.\
 \
 **Artificial intelligence/Machine learning insight\
-\**
+
 This query demonstrates how clustering helps analysts compare the characteristics of different behavioral groups instead of evaluating isolated events.
 
 An AI/ML model can recognize that:
@@ -329,11 +307,9 @@ index=network sourcetype=clustering_hunt\
 AI/ML Concept:
 
 Pattern Recognition\
-\
-\
-\
-\
-\
+
+Please refer to image # 15 in the repository.
+
 The **suspicious_beaconing_activity** behavior group generated the highest DNS activity with **1,625 DNS queries**, significantly exceeding all other behavior groups.\
 \
 The results reveal a substantial difference in DNS activity among the four behavioral clusters.
@@ -348,10 +324,9 @@ The results reveal a substantial difference in DNS activity among the four behav
 
 The unusually high DNS activity associated with the **suspicious_beaconing_activity** cluster suggests behavior that warrants additional investigation.
 
-\
-\
-Artificial intelligence/ Machine learning Insight
--------------------------------------------------
+
+**Artificial intelligence/ Machine learning Insight**
+
 
 This query demonstrates how AI/ML models can use **DNS behavior as a feature** when clustering network activity.
 
@@ -376,10 +351,9 @@ index=network sourcetype=clustering_hunt\
 AI/ML Concept:
 
 Threat Hunting Prioritization\
-\
-\
-\
-\
+
+Please refer to image # 16 in the repository.
+
 The **recon_scanning_activity** behavior group generated the highest number of failed login attempts, with **49 failed logins**, followed by **suspicious_beaconing_activity** with **30 failed logins**.\
 \
 The results indicate that authentication failures are concentrated within the suspicious behavior groups.
@@ -401,11 +375,8 @@ index=network sourcetype=clustering_hunt\
 AI/ML Concept:
 
 Cluster Outliers\
-\
-\
-\
-\
-\
+
+Please refer to images # 17 and 18 in the repository.
 
 | **Source IP** | **Country** | **Unique Destinations** | **Connections** | **Behavior Group** |
 |----|----|----|----|----|
@@ -435,9 +406,9 @@ This combination of high connection counts and extensive host discovery is chara
 
 index=network sourcetype=clustering_hunt\
 \| stats sum(connection_count) as connections sum(unique_destinations) as destinations sum(bytes_sent) as bytes sum(failed_logins) as failed_logins by behavior_group\
-\
-\
-\
+
+Please refer to image # 19 in the repository.
+
 The two behavior groups that should be prioritized for investigation are:
 
 **1. recon_scanning_activity**\
@@ -499,6 +470,4 @@ This illustrates how modern SOC platforms use AI/ML to prioritize investigations
 
 This lab demonstrated how clustering concepts can enhance threat hunting by identifying groups of related behaviors instead of isolated events. By analyzing multiple behavioral features together, I was able to distinguish between normal web activity, legitimate administrative operations, reconnaissance scanning, and suspicious beaconing. This approach mirrors how AI/ML-assisted SOC platforms help analysts focus on the most significant threats, enabling faster and more effective investigations into previously unknown or evolving attack techniques.
 
-Top of Form
 
-Bottom of Form
